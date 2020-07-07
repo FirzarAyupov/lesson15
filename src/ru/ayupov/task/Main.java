@@ -30,8 +30,7 @@ public class Main {
                     System.out.printf("Файл \"%s\" успешно создан\n", file.getAbsolutePath());
                 }
             }
-        } catch (
-                IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -51,20 +50,16 @@ public class Main {
 
     void renameFile(String oldFileName, String newFileName) {
 
-        try {
-            File file = new File(root + oldFileName);
-            File newFile = new File(root + newFileName);
-            if (newFile.exists()) {
-                System.out.printf("Невозможно переименовать файл \"%s\", файл с таким именем уже существует\n", newFile.getAbsolutePath());
-                return;
-            }
-            if (file.renameTo(newFile)) {
-                System.out.printf("Файл \"%s\" успешно переименован на \"%s\"\n", file.getAbsolutePath(), newFile.getAbsolutePath());
-            } else {
-                System.out.println("Ошибка при переименовании файла");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        File file = new File(root + oldFileName);
+        File newFile = new File(root + newFileName);
+        if (newFile.exists()) {
+            System.out.printf("Невозможно переименовать файл \"%s\", файл с таким именем уже существует\n", newFile.getAbsolutePath());
+            return;
+        }
+        if (file.renameTo(newFile)) {
+            System.out.printf("Файл \"%s\" успешно переименован на \"%s\"\n", file.getAbsolutePath(), newFile.getAbsolutePath());
+        } else {
+            System.out.println("Ошибка при переименовании файла");
         }
     }
 
@@ -100,23 +95,18 @@ public class Main {
     }
 
     void getList(String path) {
-        try {
-            File[] fileList = (new File(path)).listFiles();
-            if (fileList != null) {
-
-                for (File fl : fileList) {
-                    if (fl.isDirectory()) {
-                        System.out.printf("%s[%s]\n", numToSpacing(level), fl.getName());
-                        level++;
-                        getList(path + fl.getName() + File.separator);
-                    } else {
-                        System.out.println(numToSpacing(level) + fl.getName());
-                    }
+        File[] fileList = (new File(path)).listFiles();
+        if (fileList != null) {
+            for (File fl : fileList) {
+                if (fl.isDirectory()) {
+                    System.out.printf("%s[%s]\n", numToSpacing(level), fl.getName());
+                    level++;
+                    getList(path + fl.getName() + File.separator);
+                } else {
+                    System.out.println(numToSpacing(level) + fl.getName());
                 }
-                level--;
             }
-        } catch (NullPointerException e) {
-            e.printStackTrace();
+            level--;
         }
     }
 
@@ -129,6 +119,7 @@ public class Main {
     }
 
     void run() {
+        //Создание тестовой папки
         createDir("");
 
         createNewFile("file1.txt");
@@ -151,7 +142,7 @@ public class Main {
         getList(root);
 
         Scanner sc = new Scanner(System.in);
-        System.out.printf("Удалить диреторию \"%s\" полностью?(y/n)", root);
+        System.out.printf("Удалить директорию \"%s\" полностью? (y/n)", root);
         String answer = sc.next();
 
         switch (answer.toUpperCase()) {
@@ -161,14 +152,9 @@ public class Main {
             case "N":
                 break;
         }
-
-        //;
-
     }
 
     public static void main(String[] args) {
         new Main().run();
     }
-
-
 }
