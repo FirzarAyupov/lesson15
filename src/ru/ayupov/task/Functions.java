@@ -6,8 +6,13 @@ import java.nio.file.Files;
 
 public class Functions {
 
-    static final String root = (new File(".")).getAbsolutePath() + "\\testFolder\\";
-    static int level;
+    static String root;
+
+    static {
+        final File testFolder = new File("testFolder");
+        testFolder.mkdir();
+        root = testFolder.getAbsolutePath() + File.separator;
+    }
 
     static void createNewFile(String filename) {
         File file = new File(root + filename);
@@ -84,19 +89,19 @@ public class Functions {
 
     }
 
-    static void getList(String path) {
+    static void getList(String path, int level) {
         File[] fileList = (new File(path)).listFiles();
         if (fileList != null) {
             for (File fl : fileList) {
                 if (fl.isDirectory()) {
                     System.out.printf("%s[%s]\n", numToSpacing(level), fl.getName());
                     level++;
-                    getList(path + fl.getName() + File.separator);
+                    getList(path + fl.getName() + File.separator, level);
+                    level--;
                 } else {
                     System.out.println(numToSpacing(level) + fl.getName());
                 }
             }
-            level--;
         }
     }
 

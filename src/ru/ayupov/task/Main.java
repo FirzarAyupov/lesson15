@@ -36,7 +36,7 @@ public class Main {
         copyFile("file1NewName.txt", "newFolder3\\newFolder4\\file5NewName.txt");
 
         System.out.printf("Структура папки \"%s\":\n", root);
-        getList(root);
+        getList(root, 0);
 
         Scanner sc = new Scanner(System.in);
         System.out.printf("Удалить директорию \"%s\" полностью? (y/n)", root);
